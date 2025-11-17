@@ -1,21 +1,28 @@
 import subprocess
+import ipaddress
 
-ips = ["8.8.8.8", "1.1.1.1", "192.168.1.1"]
+# Ask user for a subnet
+subnet = input("Enter a subnet (e.g. 192.168.1.0/30): ")
 
-for ip in ips:
-  print("Pinging: ", ip)
+# Convert the text into a network object
+network = ipaddress.ip_network(subnet, strict=False)
 
-  result= subprocess.run(
-    ["ping", "-n", "1", ip],
-    stdout=subprocess.PIPE,
-    text=True
-  )
+# Loop through all usable IPs in the subnet
+for ip in network.hosts():
+    ip_str = str(ip)
+    print("Pinging:", ip_str)
 
-  output = result.stdout
+    result = subprocess.run(
+        ["ping", "-n", "1", ip_str],
+        stdout=subprocess.PIPE,
+        text=True
+    )
 
-  if "TTL" in output:
-    print(ip, " is UP")
-  else:
-    print(ip, " is DOWN")
+    output = result.stdout
 
-  print("-------------------------------")
+    if "TTL" in output:
+        print(ip_str, "is UP")
+    else:
+        print(ip_str, "is DOWN")
+
+    print("----------------------")
