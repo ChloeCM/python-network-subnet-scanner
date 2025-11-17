@@ -1,6 +1,7 @@
 import subprocess
 import ipaddress
 import json
+from datetime import datetime
 
 # Ask user for a subnet
 subnet = input("Enter a subnet (e.g. 192.168.1.0/30): ")
@@ -10,6 +11,9 @@ network = ipaddress.ip_network(subnet, strict=False)
 
 # New list for storing the results
 results = []
+
+# Overall start time
+scan_start = datetime.now().isoformat(timespec="seconds")
 
 # Loop through all usable IPs in the subnet
 for ip in network.hosts():
@@ -32,10 +36,25 @@ for ip in network.hosts():
     print(ip_str, " is ", status)
     print("----------------------")
 
-    # Store results as an object
-    results.append({"ip: ": ip_str, "status ": status})
+    # Timestamp for each IP scanned
+    timestamp = datetime.now().isoformat(timespec="seconds")
 
-    # <<< NEW: Save to JSON file
+    # Store results as an object
+    results.append({
+        "ip: ": ip_str, 
+        "status ": status,
+        "timestamp: ": timestamp
+        })
+    
+# JSON structure
+output_data = {
+    "subnet: ": subnet,
+    "scan_started_at: ": scan_start,
+    "scan_finished_at: ": datetime.now().isoformat(timespec="seconds"),
+    "results :": results
+}
+
+    # Save to JSON file
 with open("results.json", "w") as f:
     json.dump(results, f, indent=4)
 
