@@ -55,7 +55,7 @@ output_data = {
 }
 
     # Save to JSON file
-with open("results.json", "w") as f:
-    json.dump(results, f, indent=4)
+with open("results.json", "w") as file:
+    json.dump(results, file, indent=4)
 
 print("Results saved to results.json")
