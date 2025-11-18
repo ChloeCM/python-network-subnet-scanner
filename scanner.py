@@ -3,11 +3,16 @@ import ipaddress
 import json
 from datetime import datetime
 
-# Ask user for a subnet
-subnet = input("Enter a subnet (e.g. 192.168.1.0/30): ")
+while True:
+    # Ask user for a subnet
+    subnet = input("Enter a subnet (e.g. 192.168.1.0/30): ")
 
-# Convert the text into a network object
-network = ipaddress.ip_network(subnet, strict=False)
+    try:
+        # Convert the text into a network object
+        network = ipaddress.ip_network(subnet, strict=False)
+        break
+    except ValueError:
+        print("Invalid subnet. Please try again...")
 
 # New list for storing the results
 results = []
@@ -20,18 +25,25 @@ for ip in network.hosts():
     ip_str = str(ip)
     print("Pinging:", ip_str)
 
-    result = subprocess.run(
-        ["ping", "-n", "1", ip_str],
-        stdout=subprocess.PIPE,
-        text=True
-    )
+    try:
+        result = subprocess.run(
+            ["ping", "-n", "1", "-w", "2000", ip_str],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=3
+        )
 
-    output = result.stdout
+        output = result.stdout
 
-    if "TTL" in output:
-        status = "UP"
-    else:
-        status = "DOWN"
+        if "TTL" in output:
+            status = "UP"
+        else:
+            status = "DOWN"
+    except subprocess.TimeoutExpired:
+        status = "DOWN (timeout)"
+    except Exception as e:
+        status = f"ERROR: {str(e)}"
 
     print(ip_str, " is ", status)
     print("----------------------")
