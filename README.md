@@ -23,3 +23,54 @@ This project was built to learn foundational **network automation** skills, usin
   - each IP checked
   - beginning and end of the scan
 - Beginner friendly, clear, linear Python code
+
+---
+
+## 📄 Example Output (results.json)
+
+```json
+{
+  "subnet": "192.168.1.0/30",
+  "scan_started_at": "2025-11-13T20:10:55",
+  "scan_finished_at": "2025-11-13T20:10:57",
+  "results": [
+    {
+      "ip": "192.168.1.1",
+      "status": "DOWN",
+      "timestamp": "2025-11-13T20:10:56"
+    },
+    {
+      "ip": "192.168.1.2",
+      "status": "UP",
+      "timestamp": "2025-11-13T20:10:57"
+    }
+  ]
+}
+```
+
+---
+
+## ▶️ How to Run
+
+1. Install Python 3
+
+2. Clone this repository
+
+```bash
+   git clone https://github.com/ChloeCM/python-network-subnet-scanner.git
+   cd python-network-subnet-scanner
+```
+
+3. Run the scanner
+
+   ````bash
+   python scanner.py
+   ```
+
+   ````
+
+4. Enter a subnet when prompted
+   192.168.1.0/29
+
+5. View results in:
+   results.json
