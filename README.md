@@ -56,21 +56,54 @@ This project was built to learn foundational **network automation** skills, usin
 
 2. Clone this repository
 
-```bash
-   git clone https://github.com/ChloeCM/python-network-subnet-scanner.git
-   cd python-network-subnet-scanner
-```
+  ```bash
+     git clone https://github.com/ChloeCM/python-network-subnet-scanner.git
+     cd python-network-subnet-scanner
+  ```
 
 3. Run the scanner
 
-   ````bash
+   ```bash
    python scanner.py
    ```
 
-   ````
+4. Enter a subnet when prompted, e.g. 192.168.1.0/29
 
-4. Enter a subnet when prompted
-   192.168.1.0/29
+5. View results in: results.json
 
-5. View results in:
-   results.json
+---
+
+🧠 How It Works (Simple Explanation)
+
+- The user enters a subnet such as 192.168.1.0/30.
+- Python validates it using the built-in ipaddress module.
+- The script generates a list of usable host addresses (skips network + broadcast).
+- Each host is pinged once using:
+-   a 2-second Windows ping timeout (-w 2000)
+-   a 3-second Python subprocess timeout (timeout=3)
+- The script checks the ping output for "TTL" to determine if the host is UP.
+- All scan results are stored in results.json with timestamps.
+- This mirrors how simple network monitoring tools operate.
+
+---
+
+🛠️ Skills Demonstrated
+
+- Python scripting
+- Calling system commands with subprocess
+- ICMP ping automation
+- Error handling
+- Input validation
+- Working with IPv4 subnets (ipaddress module)
+- Creating structured JSON logs
+- Timestamp formatting
+- Writing clear, maintainable automation code
+
+---
+
+📌 Future Improvements (Optional)
+
+- Multi-threaded scanning for speed
+- Saving logs into timestamped files in a logs or folder
+- Retry logic (ping an IP multiple times)
+
