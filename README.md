@@ -1,8 +1,5 @@
 # Python Subnet Scanner
 
-A simple Python tool that uses ping to check if a host is UP or DOWN.
-This project is being built step-by-step to learn network automation fundamentals.
-
 A simple Python-based subnet scanner that pings every usable host in a given subnet and reports whether each IP address is **UP**, **DOWN**, or **timed out**.  
 This project was built to learn foundational **network automation** skills, using Python, ICMP (ping), subprocess execution, input validation, and JSON logging.
 
